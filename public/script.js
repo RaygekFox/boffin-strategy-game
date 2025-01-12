@@ -35,6 +35,10 @@ canvas.addEventListener('click', (e) => {
 socket.on('updateMap', (elements) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   elements.forEach(({ type, x, y }) => {
-    ctx.drawImage(images[type], x, y, 50, 50);
+    if (images[type].complete && images[type].naturalHeight !== 0) {
+      ctx.drawImage(images[type], x, y, 50, 50);
+    } else {
+      console.error(`Image "${type}" is not loaded correctly.`);
+    }
   });
 });
